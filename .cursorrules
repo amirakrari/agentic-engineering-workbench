@@ -1,0 +1,9 @@
+# Portable cockpit entrypoint
+
+Read AGENTS.md at this workspace root, then project.yaml and the target's own
+instructions using docs/TARGET_WORKFLOW.md. Keep task files locally excluded
+inside the target; shared workflows and knowledge remain in the cockpit.
+Use an available graph or language server for structural questions; otherwise
+use bounded file search. Load the selected .agents/skills/<name>/SKILL.md by
+path if it is not discovered. Discover and load relevant target skills too;
+target guidance wins overlapping conflicts. Do not copy cockpit skills into targets.

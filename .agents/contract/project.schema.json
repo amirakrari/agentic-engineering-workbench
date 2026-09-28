@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Portable cockpit project configuration",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "status", "target", "commands", "git", "architecture", "dev_docs", "knowledge"],
+  "properties": {
+    "version": { "const": 1 },
+    "status": { "enum": ["unconfigured", "ready"] },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "path", "stack", "lifecycle"],
+      "properties": {
+        "name": { "type": ["string", "null"], "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+        "path": { "type": ["string", "null"], "pattern": "^repos/[a-z0-9]+(-[a-z0-9]+)*$" },
+        "stack": { "$ref": "#/$defs/optionalString" },
+        "lifecycle": { "enum": ["established", "greenfield"] }
+      }
+    },
+    "commands": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["build", "test_unit", "test_integration", "test_architecture", "test_filter", "lint", "format"],
+      "properties": {
+        "build": { "$ref": "#/$defs/optionalString" },
+        "test_unit": { "$ref": "#/$defs/optionalString" },
+        "test_integration": { "$ref": "#/$defs/optionalString" },
+        "test_architecture": { "$ref": "#/$defs/optionalString" },
+        "test_filter": { "$ref": "#/$defs/optionalString" },
+        "lint": { "$ref": "#/$defs/optionalString" },
+        "format": { "$ref": "#/$defs/optionalString" }
+      }
+    },
+    "git": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["main_branch", "pr_base", "pr_command", "worktree_path"],
+      "properties": {
+        "main_branch": { "$ref": "#/$defs/optionalString" },
+        "pr_base": { "$ref": "#/$defs/optionalString" },
+        "pr_command": { "$ref": "#/$defs/optionalString" },
+        "worktree_path": { "const": ".worktrees/{task}/" }
+      }
+    },
+    "architecture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["layers", "test_suites"],
+      "properties": {
+        "layers": { "type": "array", "uniqueItems": true, "items": { "type": "string", "minLength": 1 } },
+        "test_suites": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["unit", "integration", "architecture"],
+          "properties": {
+            "unit": { "$ref": "#/$defs/optionalString" },
+            "integration": { "$ref": "#/$defs/optionalString" },
+            "architecture": { "$ref": "#/$defs/optionalString" }
+          }
+        }
+      }
+    },
+    "dev_docs": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["active", "backlog", "notes"],
+      "properties": {
+        "active": { "const": "dev/active/{task}/" },
+        "backlog": { "const": "dev/backlog/{task}/" },
+        "notes": { "const": "dev/notes/{task}/" }
+      }
+    },
+    "knowledge": { "const": "knowledge/" }
+  },
+  "$defs": {
+    "optionalString": { "type": ["string", "null"], "minLength": 1 }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "status": { "const": "ready" } } },
+      "then": {
+        "properties": {
+          "target": {
+            "properties": {
+              "name": { "type": "string" },
+              "path": { "type": "string" },
+              "stack": { "type": "string" }
+            }
+          },
+          "git": {
+            "properties": {
+              "main_branch": { "type": "string" },
+              "pr_base": { "type": "string" }
+            }
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "target": { "properties": { "name": { "type": "null" }, "path": { "type": "null" } } }
+        }
+      }
+    }
+  ]
+}

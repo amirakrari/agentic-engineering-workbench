@@ -1,0 +1,84 @@
+# Engineering Governance
+
+> **Audience:** Contributors | Maintainers | AI agents
+> **Status:** Reference
+> **Owner:** Contributor Experience
+> **Last Verified:** 2026-09-27
+> **Source Anchors:** [`AGENTS.md`](../AGENTS.md), [`project.yaml`](../project.yaml), [Quick Reference](QUICK_REFERENCE.md)
+
+## Authority Order
+
+1. Applicable law, upstream license, and child contribution policy.
+2. Target root, harness, nested, and path-scoped instructions plus selected
+   target-native skills.
+3. Root cockpit contract, active intent, and compatible cockpit skills.
+4. General cockpit docs, templates, and defaults.
+
+Follow target requirements for overlapping work, record the resolution, and
+retain compatible cockpit workflow. Do not repeatedly ask about settled
+precedence. Escalate only contradictory target instructions or missing user
+scope. Never silently import a cockpit convention into upstream code.
+
+## Local Workflow Ownership
+
+Target code and task state stay with the target clone. Planning begins at
+`repos/<project>/dev/active/<task>/`; isolated implementation moves the whole
+sole task directory into clone-relative `.worktrees/<task>/dev/active/<task>/`.
+In-tree execution remains clone-local. Project backlog and investigative notes
+stay clone-root; reusable journal entries and ethical reports remain cockpit
+owned. Shared ethical reports retain project identity in
+`i-vsd-<project>-<task>.md`; reusable knowledge records its source project/task
+provenance.
+
+Machine-local workflow exclusions are exact entries in the selected clone's
+resolved shared Git `info/exclude`. They never change tracked `.gitignore` or
+global settings. Verify tracked/content collisions and effective ignores before
+writing or moving. Do not force-stage ignored task material; retain it before
+authorized worktree cleanup. A target-required tracked artifact is project work,
+not something to hide. Use [Target Workflow](TARGET_WORKFLOW.md) for procedure.
+
+## Design Principles
+
+- Keep business rules with the component that owns state.
+- Make trust and authority explicit at boundaries.
+- Prefer cohesive modules over pass-through abstractions.
+- Keep external services behind narrow adapters.
+- Use transactions for atomic state; emit side effects only after durable authority.
+- Prefer explicit dependencies over hidden globals or service location.
+- Choose KISS and YAGNI over speculative frameworks.
+- Preserve compatibility with expand/migrate/contract unless the child explicitly opts into greenfield breaks.
+
+## Boundary Rules
+
+| Concern | Rule |
+|---|---|
+| Persistence | Return domain-appropriate state; avoid presentation leakage unless child architecture requires it |
+| Validation | Validate untrusted input early; keep state-dependent rules with authoritative state |
+| Identity | Resolve callers from the child's trusted principal/context, not request-body authority |
+| Authorization | Enforce server-side; UI affordances are not authority |
+| Errors | Use stable child contracts without secrets, personal data, or internals |
+| Observability | Emit bounded, low-cardinality, non-sensitive diagnostics |
+| Generated artifacts | Regenerate through the owner; do not hand-edit unless the child treats them as source |
+
+## Decision Framework
+
+Before editing, answer: what behavior changes; which target root/scoped
+instructions and exact native/cockpit skills apply; which execution root and
+task path are authoritative; who owns state and authority; what is the worst
+break; which public seam proves it; what is the smallest coherent path
+ownership; which docs drift; and what evidence closes the change?
+
+## Review and Documentation
+
+Review standards and intent fidelity independently. Check the twelve-smell baseline in [Agentic Context Engineering](AGENTIC_CONTEXT_ENGINEERING.md#14-two-axis-review-and-right-sizing), trust boundaries, scope creep, and the tested worst break. Split changes that combine independent intents or become unreliable to review.
+
+Every non-trivial change records docs impact as **Updated**, **Not needed**, or **Deferred** with a named follow-up. Security, configuration, API, migration, operator, and onboarding changes default to Updated unless inspection proves otherwise.
+
+Agent rules are concise refinements of canonical docs. Never claim hooks, CI, graph tooling, or automation that is absent. Tests validate machine-consumed contracts, not prose. Rule twins are exact regular-file copies.
+
+## Related
+
+- [Operations](OPERATIONS.md)
+- [Target Workflow](TARGET_WORKFLOW.md)
+- [Documentation Architecture](DOCUMENTATION_ARCHITECTURE.md)
+- [IP Governance](legal/IP_GOVERNANCE.md)

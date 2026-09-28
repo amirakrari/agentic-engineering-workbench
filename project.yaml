@@ -1,0 +1,33 @@
+# yaml-language-server: $schema=.agents/contract/project.schema.json
+# Deliberately inactive. See docs/PROJECT_CONFIGURATION.md before selecting a target.
+version: 1
+status: unconfigured
+target:
+  name: null
+  path: null
+  stack: null
+  lifecycle: established
+commands:
+  build: null
+  test_unit: null
+  test_integration: null
+  test_architecture: null
+  test_filter: null
+  lint: null
+  format: null
+git:
+  main_branch: null
+  pr_base: null
+  pr_command: null
+  worktree_path: ".worktrees/{task}/"
+architecture:
+  layers: []
+  test_suites:
+    unit: null
+    integration: null
+    architecture: null
+dev_docs:
+  active: "dev/active/{task}/"
+  backlog: "dev/backlog/{task}/"
+  notes: "dev/notes/{task}/"
+knowledge: "knowledge/"

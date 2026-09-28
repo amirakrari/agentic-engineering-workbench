@@ -1,0 +1,213 @@
+# Resolve only the matching entry. Multiple intents combine constraints and use
+# the highest criticality (lowest numeric tier). Unknown security/privacy/money
+# effects require investigation, never a default downgrade.
+version: 1
+
+# Scope tokens are resolved before editing, not literal filesystem paths.
+# {target}: validated project.yaml target.path or selected child worktree
+# {workstream}: {target}/dev/active/<task>
+# {clone}: validated configured clone, even when {target} is a worktree
+# {knowledge}: cockpit knowledge/
+# {target_docs}: target's documented technical/user documentation locations
+# For cockpit maintenance, only explicitly requested cockpit paths are writable.
+# Discover the target's own instructions, routing and native skills first through
+# docs/TARGET_WORKFLOW.md. Relevant target guidance wins overlapping conflicts;
+# this catalog supplements it rather than replacing it.
+verification:
+  focused-unit: "commands.test_unit with a verified commands.test_filter"
+  integration: "commands.test_integration for affected boundaries"
+  architecture: "commands.test_architecture when the target has such a suite"
+  build: "commands.build for code changes"
+  lint: "commands.lint for the touched surface"
+  invariant-breakers: "Adversarial concurrency, authority or data-flow tests"
+  real-surface: "Exercise the actual affected entrypoint or interface"
+  docs: "Validate changed schemas, links, formatting and examples"
+  plan: "Review complete triad, acceptance gates, scope and decision coverage"
+# Null commands need explicit not-applicable evidence or an open gate.
+
+intents:
+  - id: add-feature
+    title: Add a feature or capability
+    category: feature
+    triggers: ["add a feature", "implement a capability"]
+    must_read_docs: [docs/QUICK_REFERENCE.md, docs/GOVERNANCE.md, docs/PROJECT_CONFIGURATION.md]
+    load_skills: [criticality-guardrail, explore-codebase]
+    paths_in_scope: ["{target}/<approved-feature-paths>", "{workstream}/", "{target_docs}"]
+    minimum_tests: [focused-unit, integration, build, real-surface]
+    docs_to_update: ["{target_docs}", "{workstream}/context.md"]
+    pr_checklist: .agents/skills/review-pr/SKILL.md
+    forbidden_without_approval: [unrelated-scope, breaking-published-contract, publication]
+    criticality:
+      tier: 3
+      intake_clarification_mode: unresolved_domain_questions
+      exploration_protocol: bounded_callers_callees
+      testing_strategy: domain_invariants_and_contracts
+      review_protocol: independent_peer
+
+  - id: fix-bug
+    title: Diagnose and fix a regression
+    category: bugfix
+    triggers: ["fix a bug", "debug", "regression", "incorrect result"]
+    must_read_docs: [docs/QUICK_REFERENCE.md, docs/OPERATIONS.md, docs/PROJECT_CONFIGURATION.md]
+    load_skills: [debug-issue, criticality-guardrail]
+    paths_in_scope: ["{target}/<reproduced-defect-paths>", "{workstream}/"]
+    minimum_tests: [focused-unit, build, real-surface]
+    docs_to_update: ["{workstream}/context.md", "{target_docs}"]
+    pr_checklist: .agents/skills/review-pr/SKILL.md
+    forbidden_without_approval: [unrelated-cleanup, weakened-tests, publication]
+    criticality:
+      tier: 3
+      intake_clarification_mode: unresolved_domain_questions
+      exploration_protocol: reproduce_then_trace
+      testing_strategy: failing_regression_then_fix
+      review_protocol: independent_peer
+
+  - id: refactor-code
+    title: Preserve behavior while changing structure
+    category: refactor
+    triggers: ["refactor", "rename", "extract", "restructure"]
+    must_read_docs: [docs/QUICK_REFERENCE.md, docs/GOVERNANCE.md, docs/PROJECT_CONFIGURATION.md]
+    load_skills: [refactor-safely, review-changes]
+    paths_in_scope: ["{target}/<approved-refactor-paths>", "{workstream}/"]
+    minimum_tests: [focused-unit, architecture, build, real-surface]
+    docs_to_update: ["{target_docs}", "{workstream}/context.md"]
+    pr_checklist: .agents/skills/review-pr/SKILL.md
+    forbidden_without_approval: [behavior-change, cross-scope-rewrite, publication]
+    criticality:
+      tier: 3
+      intake_clarification_mode: observable_behavior_contract
+      exploration_protocol: references_and_callers
+      testing_strategy: characterization_and_behavior_preservation
+      review_protocol: standards_and_spec_fidelity
+
+  - id: add-api-endpoint
+    title: Add or modify a public interface
+    category: api
+    triggers: ["endpoint", "API contract", "request response", "public interface"]
+    must_read_docs: [docs/QUICK_REFERENCE.md, docs/DOCUMENTATION_ARCHITECTURE.md, docs/PROJECT_CONFIGURATION.md]
+    load_skills: [criticality-guardrail, review-changes]
+    paths_in_scope: ["{target}/<approved-interface-paths>", "{target_docs}", "{workstream}/"]
+    minimum_tests: [focused-unit, integration, build, real-surface]
+    docs_to_update: ["{target_docs}", "{workstream}/context.md"]
+    pr_checklist: .agents/skills/review-pr/SKILL.md
+    forbidden_without_approval: [weakened-authority, breaking-published-contract, publication]
+    criticality:
+      tier: 3
+      intake_clarification_mode: public_contract_and_authority
+      exploration_protocol: entrypoint_to_persistence
+      testing_strategy: interface_and_error_contracts
+      review_protocol: independent_peer
+
+  - id: security-change
+    title: Change a trust or authorization boundary
+    category: security
+    triggers: ["authentication", "authorization", "credentials", "trust boundary"]
+    must_read_docs: [docs/QUICK_REFERENCE.md, .agents/rules/work-criticality-matrix.md, docs/PROJECT_CONFIGURATION.md]
+    load_skills: [grill-me, criticality-guardrail, epistemic-mad-review]
+    paths_in_scope: ["{target}/<approved-security-paths>", "{target_docs}", "{workstream}/"]
+    minimum_tests: [invariant-breakers, integration, build, real-surface]
+    docs_to_update: ["{target_docs}", "{workstream}/context.md"]
+    pr_checklist: .agents/skills/review-pr/SKILL.md
+    forbidden_without_approval: [weakened-authority, credential-exposure, publication]
+    criticality:
+      tier: 1
+      intake_clarification_mode: mandatory_risk_alignment
+      exploration_protocol: exhaustive_trust_boundary_trace
+      testing_strategy: fail_closed_isolation_and_replay
+      review_protocol: anonymized_epistemic_debate
+
+  - id: privacy-change
+    title: Change personal data collection retention or erasure
+    category: privacy
+    triggers: ["personal data", "PII", "privacy", "erasure", "retention"]
+    must_read_docs: [docs/QUICK_REFERENCE.md, .agents/rules/work-criticality-matrix.md, docs/PROJECT_CONFIGURATION.md]
+    load_skills: [grill-me, criticality-guardrail, epistemic-mad-review]
+    paths_in_scope: ["{target}/<approved-data-paths>", "{target_docs}", "{workstream}/"]
+    minimum_tests: [invariant-breakers, integration, build, real-surface]
+    docs_to_update: ["{target_docs}", "{workstream}/context.md"]
+    pr_checklist: .agents/skills/review-pr/SKILL.md
+    forbidden_without_approval: [expanded-collection, irreversible-erasure, publication]
+    criticality:
+      tier: 2
+      intake_clarification_mode: mandatory_risk_alignment
+      exploration_protocol: exhaustive_data_lineage
+      testing_strategy: erasure_anti_resurrection_and_log_leakage
+      review_protocol: anonymized_epistemic_debate
+
+  - id: payment-sovereign
+    title: Change money value or irreversible authority flows
+    category: sovereign
+    triggers: ["payments", "refunds", "ledger", "settlement", "value transfer"]
+    must_read_docs: [docs/QUICK_REFERENCE.md, .agents/rules/work-criticality-matrix.md, docs/PROJECT_CONFIGURATION.md]
+    load_skills: [i-vsd, grill-me, criticality-guardrail, epistemic-mad-review]
+    paths_in_scope: ["{target}/<approved-value-flow-paths>", "{target_docs}", "{workstream}/"]
+    minimum_tests: [invariant-breakers, integration, build, real-surface]
+    docs_to_update: ["{target_docs}", "{workstream}/context.md"]
+    pr_checklist: .agents/skills/review-pr/SKILL.md
+    forbidden_without_approval: [real-money-side-effects, changed-financial-authority, publication]
+    criticality:
+      tier: 0
+      intake_clarification_mode: mandatory_risk_alignment
+      exploration_protocol: exhaustive_value_authority_and_recovery
+      testing_strategy: conservation_concurrency_idempotency_and_reversal
+      review_protocol: anonymized_epistemic_debate
+
+  - id: update-docs
+    title: Update documentation without changing product behavior
+    category: docs
+    triggers: ["documentation", "README", "runbook", "documentation parity"]
+    must_read_docs: [docs/QUICK_REFERENCE.md, docs/DOCUMENTATION_ARCHITECTURE.md, docs/DOCUMENTATION_STYLE_GUIDE.md]
+    load_skills: [agentic-research]
+    paths_in_scope: ["{target_docs}", "docs/<requested-documents>", "{workstream}/"]
+    minimum_tests: [docs]
+    docs_to_update: ["<requested-canonical-document-and-projections>"]
+    pr_checklist: .agents/skills/review-pr/SKILL.md
+    forbidden_without_approval: [product-behavior-change, copied-external-prose, publication]
+    criticality:
+      tier: 4
+      intake_clarification_mode: autonomous_defaults
+      exploration_protocol: named_headings_and_links
+      testing_strategy: formatting_links_and_schemas
+      review_protocol: lightweight_self_check
+
+  - id: create-implementation-plan
+    title: Author a decision complete implementation triad
+    category: planning
+    triggers: ["implementation plan", "plan the implementation", "dev-doc triad"]
+    must_read_docs: [docs/QUICK_REFERENCE.md, .agents/CONTEXT_ENGINEERING.md, docs/PROJECT_CONFIGURATION.md, docs/TARGET_WORKFLOW.md]
+    load_skills: [i-vsd, grill-me, implementation-plan]
+    paths_in_scope: ["{workstream}/", "<resolved-target-local-exclusion-file>", "islamic-value-sensitive-design/workstreams/"]
+    minimum_tests: [plan]
+    docs_to_update: ["{workstream}/plan.md", "{workstream}/tasks.md", "{workstream}/context.md"]
+    pr_checklist: .agents/skills/senior-cto-feedback/SKILL.md
+    forbidden_without_approval: [product-edits, invented-decisions, publication]
+    criticality:
+      tier: 3
+      intake_clarification_mode: inherit_proposed_change_risk
+      exploration_protocol: bounded_then_escalate_by_risk
+      testing_strategy: acceptance_and_verification_design
+      review_protocol: separate_adversarial_review_session
+
+  - id: create-agent-context-skill
+    title: Maintain cockpit skills instructions or routing
+    category: agent-context
+    triggers: ["create a skill", "update a skill", "context engineering", "agent instructions"]
+    must_read_docs: [docs/QUICK_REFERENCE.md, .agents/skills/_SKILL_SCHEMA.md, .agents/CONTEXT_ENGINEERING.md]
+    load_skills: [skill-authoring]
+    paths_in_scope: [".agents/", ".omo/rules/", "AGENTS.md", "CLAUDE.md", ".cursorrules", ".github/copilot-instructions.md", "project.yaml", "docs/", "knowledge/"]
+    minimum_tests: [docs]
+    docs_to_update: ["<changed-router-and-canonical-owner>", "<matching-rule-twin>"]
+    pr_checklist: .agents/skills/review-pr/SKILL.md
+    forbidden_without_approval: [child-tooling-pollution, global-harness-edits, publication]
+    criticality:
+      tier: 4
+      intake_clarification_mode: autonomous_defaults
+      exploration_protocol: schema_and_direct_consumers
+      testing_strategy: metadata_links_routing_and_twins
+      review_protocol: lightweight_self_check
+
+# Extend this registry with a narrow target-specific intent only after identifying
+# real triggers, authoritative docs, exact paths, minimum tests and forbidden
+# actions. Keep target overrides in the locally excluded task context; do not place
+# cockpit infrastructure in upstream contributions. New intents must contain
+# every field above, including all five criticality fields.

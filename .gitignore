@@ -1,0 +1,20 @@
+# Independent target repositories and their worktrees
+repos/*
+!repos/.gitkeep
+
+# Private local settings and research/verification output
+project.local.yaml
+.verification/
+.firecrawl/
+.env
+.env.*
+!.env.example
+AGENTS.local.md
+CLAUDE.local.md
+
+# OS and editor artifacts
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
