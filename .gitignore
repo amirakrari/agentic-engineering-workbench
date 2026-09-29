@@ -1,7 +1,3 @@
-# Independent target repositories and their worktrees
-repos/*
-!repos/.gitkeep
-
 # Private local settings and research/verification output
 project.local.yaml
 .verification/

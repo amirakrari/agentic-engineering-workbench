@@ -48,6 +48,71 @@ not something to hide. Use [Target Workflow](TARGET_WORKFLOW.md) for procedure.
 - Choose KISS and YAGNI over speculative frameworks.
 - Preserve compatibility with expand/migrate/contract unless the child explicitly opts into greenfield breaks.
 
+## Context-Agnostic Core Admission Rule
+
+The workbench core owns reusable engineering process, not the implementation
+context of every project it may operate on. New material is admitted only when
+it satisfies all of these conditions:
+
+1. **Cross-context utility:** it remains useful across languages, frameworks,
+   vendors, deployment models, and product domains.
+2. **Process ownership:** it governs discovery, reasoning, planning, execution,
+   verification, review, provenance, or knowledge flow rather than one target's
+   business or implementation rules.
+3. **Target deference:** it discovers and yields to applicable target-native
+   instructions and skills instead of duplicating or overriding them.
+4. **No mandatory external integration:** it does not require a particular SaaS,
+   SDK, issue tracker, documentation platform, renderer, cloud, or package.
+5. **Portable evidence:** its completion and verification contract can be
+   expressed using target-configured commands and observable behavior.
+
+Context-agnostic does not mean vague. A workflow may be highly prescriptive about
+evidence, authority, determinism, isolation, or review while remaining neutral
+about the target's stack and domain.
+
+### Routing Material That Does Not Qualify
+
+| Material | Correct home |
+|---|---|
+| Product/domain behavior | Target repository |
+| Organization-specific policy | Organization governance repository or target |
+| Language/framework implementation skill | Target repository or separate skill catalog |
+| Vendor/SaaS/SDK integration | Target repository or optional integration pack |
+| Documentation/rendering platform workflow | Separate skill catalog |
+| Reusable target-independent engineering workflow | Workbench core |
+
+Do not add a core skill merely because several projects might use the same tool.
+Reuse frequency does not make an integration context-agnostic. The target
+discovery contract allows users to supply such skills without changing the
+workbench.
+
+Optional reference/template catalogs are not auto-activated skills and must be
+clearly separated from the core. New stack-specific catalogs require an explicit
+architecture decision; prefer an external catalog.
+
+Every new or materially expanded skill must document its admission decision in
+the change review: which five conditions it satisfies and why its behavior cannot
+be owned more accurately by a target or optional catalog.
+
+## Visible Targets and Contribution Boundary
+
+The local `repos/` directory is deliberately visible for editor navigation,
+search, workspace indexing, and chat `@` mentions. Its children are independent
+target repositories and never workbench source.
+
+Workbench contributors:
+
+- create `repos/` locally; the workbench does not track a placeholder;
+- never bulk-stage the workbench root while targets are present;
+- stage exact paths and run `bash eng/check-workbench-staging.sh`;
+- reject every non-deletion staged or committed `repos/**` path, including
+  nested repositories represented as gitlinks;
+- clean the parent index with `git restore --staged -- repos/`, never by deleting
+  or resetting a target repository.
+
+CI verifies the committed tree with the same guard. Target commits and workbench
+commits remain separate histories, commands, reviews, and publication decisions.
+
 ## Boundary Rules
 
 | Concern | Rule |

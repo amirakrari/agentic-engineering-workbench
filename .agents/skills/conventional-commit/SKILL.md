@@ -30,6 +30,9 @@ authorization does not imply push, PR, merge or history-rewrite authorization.
 8. **Safe staging:** inspect the index, stage exact owned paths, and preserve
    unrelated staged work. Path-limited commits isolate files, not mixed-author
    hunks; coordinate when another contributor changed the same file.
+   When committing this workbench itself, visible target repositories under
+   `repos/` are never contribution content: do not bulk-stage the root, and run
+   `bash eng/check-workbench-staging.sh` before committing.
 9. **Self-sufficient packet:** record type/scope, subject, rationale, release
    treatment, target-required trailers, literal file paths and verification.
    Execution supplies native Git commands, not a generated shell program.

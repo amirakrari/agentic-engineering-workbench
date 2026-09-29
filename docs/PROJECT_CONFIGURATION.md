@@ -16,8 +16,8 @@ in the workstream context. Null never means “passed.”
 | Field | Contract |
 |---|---|
 | `version` | Schema version 1 |
-| `target.name` | Lowercase kebab-case child directory name |
-| `target.path` | Exactly `repos/` plus `target.name`, without trailing slash |
+| `target.name` | Exact local clone directory name; letters, digits, `.`, `_`, and `-` are allowed |
+| `target.path` | Exactly `repos/` plus the local clone directory name, without trailing slash |
 | `target.stack` | Descriptive stack name; does not install tooling |
 | `target.lifecycle` | `established` by default; `greenfield` only with explicit target policy |
 | `commands` | Reviewed shell commands relative to the selected child Cwd, or null |
@@ -41,19 +41,23 @@ runner-specific filtering before combining `test_unit` and `test_filter`.
 Schema validation checks types, required keys and path syntax. An agent must
 also verify filesystem and execution semantics before side effects:
 
-1. `target.path` equals `repos/<target.name>` and its real path stays below this
+1. If configuration is already `ready`, validate its exact target first. If it
+   is unconfigured, enumerate immediate `repos/` directories directly and select
+   only an unambiguous independent Git root using
+   [target discovery](TARGET_WORKFLOW.md#visible-target-repository-discovery).
+2. `target.path` equals `repos/<target.name>` exactly, including case, and its real path stays below this
    cockpit's real `repos/` path. Reject symlink escapes.
-2. The directory already exists as an independent clone, not the parent repo
+3. The directory already exists as an independent clone, not the parent repo
    found by Git's upward search. Compare its real path with
    `git -C repos/<name> rev-parse --show-toplevel`.
-3. Discover root/scoped target instructions and relevant native skills, combine
+4. Discover root/scoped target instructions and relevant native skills, combine
    them with compatible cockpit guidance, and resolve conflicts in favor of
    target requirements. Verify branch refs and local dirty state; do not switch
    or pull automatically.
-4. Required commands for this intent are present, safe and relevant. Null checks
+5. Required commands for this intent are present, safe and relevant. Null checks
    require an explicit not-applicable reason or an open gate, not an invented
    command. Capture Cwd with each result.
-5. For worktrees, validate the explicit worktree Cwd and common Git directory
+6. For worktrees, validate the explicit worktree Cwd and common Git directory
    against the selected clone. Do not change `target.name`. Establish effective
    shared local exclusions before moving the sole clone-local triad into the
    worktree. See [the lifecycle](TARGET_WORKFLOW.md).

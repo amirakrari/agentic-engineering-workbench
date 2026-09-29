@@ -42,6 +42,38 @@ worktree, switching an explicitly authorized branch, or resuming stale context.
 Delegate the resolved execution root, scope, target instruction paths, selected
 skill paths and precedence decisions. Every worker remains bound to them.
 
+## Visible Target Repository Discovery
+
+`repos/` is intentionally not ignored. This keeps target files available to
+editor trees, fuzzy search, workspace indexes, attachment pickers, and chat
+`@` mentions. Never hide the directory globally or through the workbench's Git
+ignore rules merely to clean parent status output.
+
+Resolve targets independently of editor and ignore-aware indexes:
+
+1. When `project.yaml` is `ready`, validate its exact configured target first.
+2. Otherwise enumerate immediate directories directly:
+
+   ```bash
+   find repos -mindepth 1 -maxdepth 1 -type d -print
+   ```
+
+3. Keep only candidates where `git -C <candidate> rev-parse --show-toplevel`
+   resolves to that candidate's real path. Reject parent fallback, symlink escape,
+   non-repositories, and internal task worktrees presented as target clones.
+4. Record local directory, origin URL when available, remote owner/repository
+   identity, current branch, and discovered root instructions.
+5. Match user wording against the exact local directory, remote repository name,
+   and `owner/repository`. Select one unambiguous candidate.
+6. If several candidates match—or the user refers only to a duplicated remote
+   repository name—show the concise candidates and ask once.
+7. Persist the selected local path in `project.yaml`; users should not repeatedly
+   paste relative paths after setup.
+
+Never conclude that no target exists because a Git-aware glob, repository search,
+language server, graph, or harness index omitted nested repositories. Direct
+filesystem enumeration and child-Git validation are authoritative.
+
 ## Path Ownership
 
 `project` is `target.name`; `task` is a stable lowercase kebab-case slug, not a

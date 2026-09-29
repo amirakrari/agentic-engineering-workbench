@@ -80,6 +80,12 @@ scope is missing. No project file grants unrelated or destructive permissions.
   and ownership checks; they never enter an upstream commit. Do not copy shared
   cockpit rules/skills into targets. Maintainer-required artifacts remain tracked
   project work. Never edit a sibling project not named by the user.
+- **Context-agnostic core:** Admit only target-independent engineering workflows
+  that satisfy the
+  [governance admission rule](docs/GOVERNANCE.md#context-agnostic-core-admission-rule).
+  Product, stack, vendor, SaaS, SDK, issue-tracker, documentation-platform, and
+  domain skills belong in the target or a separate optional catalog. Discover
+  and load them there; do not grow this repository into a universal skill bundle.
 - **Architecture:** Keep domain behavior separate from transport and persistence
   where the target uses that boundary. Repository/entity mapping, validation
   construction and identifier types follow target conventions; optional stack
@@ -113,15 +119,19 @@ scope is missing. No project file grants unrelated or destructive permissions.
 
 ### Child Repository Execution Rule
 
-1. The configured target is `repos/<project-name>/`. Before a side effect,
+1. The configured target is `repos/<repository-directory>/`. Before a side effect,
    resolve its real path, confirm it stays inside `repos/`, and check that
    `git -C <target> rev-parse --show-toplevel` identifies that independent repo.
    Reject symlink escapes, missing children and accidental parent fallback.
+   If configuration is unready, enumerate immediate `repos/` directories
+   directly and resolve independent Git roots by local name and remote identity;
+   never infer absence from an ignore-aware index. Follow
+   [visible target discovery](docs/TARGET_WORKFLOW.md#visible-target-repository-discovery).
 2. All compilation, tests, linting, formatting and target git commands MUST use
-   **Cwd: `repos/<project-name>`**, or the explicitly validated worktree selected
+   **Cwd: `repos/<repository-directory>`**, or the explicitly validated worktree selected
    by `implement-tasks`. `git -C` and a scoped shell `cd` satisfy explicit Cwd.
 3. Commands in `project.yaml` are relative to that Cwd; never prepend a second
-   `repos/<project-name>` inside a configured command. Inspect commands before
+   `repos/<repository-directory>` inside a configured command. Inspect commands before
    execution. YAML is declarative data, not an auto-executing task runner.
 4. Planning starts at clone-relative `dev/active/<task>/`.
    Isolated execution uses clone-relative `.worktrees/<task>/` and moves the
@@ -140,6 +150,10 @@ scope is missing. No project file grants unrelated or destructive permissions.
    by moving it back to its excluded clone-local path. A clean Git status is not
    proof that ignored files can be deleted. Follow [the lifecycle](docs/TARGET_WORKFLOW.md).
 8. The cockpit root is NEVER a valid Cwd for commands targeting a child.
+9. `repos/` stays visible for editor and chat `@` discovery. It is never valid
+   workbench commit content. Stage exact workbench paths, never bulk-add the
+   root, and run `bash eng/check-workbench-staging.sh` before every workbench
+   commit. Any non-deletion staged path under `repos/` is a blocker.
    Cockpit maintenance commands may run here when that is the requested task.
 
 ## 6. Task-Routing Entrypoints

@@ -75,9 +75,9 @@ Verify every claimed existing:
 Use explicit evidence labels:
 
 ```text
-Verified: repos/project/path/to/module
-Verified: repos/project/path/to/module::SymbolName
-Verified by search: pattern "..." matched repos/project/path/to/module
+Verified: repos/REPOSITORY/path/to/module
+Verified: repos/REPOSITORY/path/to/module::SymbolName
+Verified by search: pattern "..." matched repos/REPOSITORY/path/to/module
 Not found: searched for "..."; task added to create or decide
 ```
 

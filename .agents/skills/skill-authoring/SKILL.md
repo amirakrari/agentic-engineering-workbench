@@ -20,9 +20,15 @@ priority: high
    [target workflow](../../../docs/TARGET_WORKFLOW.md): inspect native skill
    catalog metadata, load only exact matching target and cockpit skill paths,
    and let target guidance win overlapping conflicts.
+8. Before authoring in this repository, pass the
+   [Context-Agnostic Core Admission Rule](../../../docs/GOVERNANCE.md#context-agnostic-core-admission-rule).
+   Tool-, vendor-, stack-, documentation-platform-, and product-specific skills
+   belong in the target or a separate catalog.
 
 ## Workflow
 
+0. Record why the capability is target-independent and why a target repository
+   or optional catalog is not the more accurate owner.
 1. Resolve the skill intent and inspect adjacent selectors for overlap.
 2. Inventory source router and full resource tree; classify each file as preserve, generalize, replace, or omit with rationale.
 3. Draft the selector first, then the ordered workflow, gates, progressive resource routing, and executable verification.

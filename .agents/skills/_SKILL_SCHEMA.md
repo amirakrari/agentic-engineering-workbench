@@ -43,6 +43,19 @@ Other descriptive sections are allowed. Do not duplicate routing sections after 
 - Shared cockpit docs live directly under `docs/`; do not introduce a private nested documentation root.
 - Technology examples are optional. Child architecture, compatibility policy, contribution contract, and licenses prevail.
 
+## Repository Admission Gate
+
+Schema compliance does not establish that this repository is the correct owner.
+Before adding a skill, apply the
+[Context-Agnostic Core Admission Rule](../../docs/GOVERNANCE.md#context-agnostic-core-admission-rule).
+
+Core skills must remain useful across languages, frameworks, vendors, deployment
+models, and product domains; govern reusable engineering process; defer to target
+authority; avoid mandatory external integrations; and verify through target-
+configured commands or observable behavior. Route tool-, vendor-, stack-, SaaS-,
+SDK-, issue-tracker-, documentation-platform-, and product-specific skills to the
+target repository or a separate optional catalog.
+
 ## Forbidden Content
 
 - Activation lists duplicated from `description`.

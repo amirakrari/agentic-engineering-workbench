@@ -12,8 +12,8 @@
       "additionalProperties": false,
       "required": ["name", "path", "stack", "lifecycle"],
       "properties": {
-        "name": { "type": ["string", "null"], "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
-        "path": { "type": ["string", "null"], "pattern": "^repos/[a-z0-9]+(-[a-z0-9]+)*$" },
+        "name": { "type": ["string", "null"], "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$" },
+        "path": { "type": ["string", "null"], "pattern": "^repos/[A-Za-z0-9][A-Za-z0-9._-]*$" },
         "stack": { "$ref": "#/$defs/optionalString" },
         "lifecycle": { "enum": ["established", "greenfield"] }
       }

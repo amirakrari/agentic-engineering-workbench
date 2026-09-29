@@ -20,13 +20,18 @@ priority: high
    repository/user rules; do not mutate merely to review.
 3. **Re-identify intent.** Match `.agents/contract/intents.yaml`; combine checklists for multiple intents without loading unrelated entries.
 4. **Apply child authority.** Read the child repository's contribution, license, security, release, and change-log contracts. They override generic defaults.
-5. **Check scope.** Every file must be in scope, none forbidden, and unrelated work must be split.
+5. **Check scope.** Every file must be in scope, none forbidden, and unrelated
+   work must be split. For a workbench pull request, run
+   `bash eng/check-workbench-staging.sh --tree HEAD` and reject every tracked
+   `repos/**` path or nested-repository gitlink.
 6. **Run two-axis review.** Apply [review-changes](../review-changes/SKILL.md): standards/Fowler smells independently from intent/spec fidelity.
 7. **Collect evidence.** Run non-null `project.yaml` commands from the selected
    execution root exactly as configured, plus child-mandated checks. Never
    report expected output as observed.
 8. **Review operations/docs.** Check public contracts, schema/data migration, rollback, observability, release notes, user docs, and durable findings as applicable.
-9. **Approval gate.** Any forbidden-without-approval action needs explicit evidence. Plane writes and GitBook/publication actions also require explicit user authorization.
+9. **Approval gate.** Any forbidden-without-approval action needs explicit
+   evidence. External-system writes and publication actions require explicit
+   user authorization.
 
 ## Universal blockers
 
@@ -34,6 +39,7 @@ priority: high
 - Out-of-scope/forbidden file or unapproved irreversible/external action.
 - Type/lint suppression used to conceal a defect.
 - Secret, credential, sensitive data, or contaminated third-party expression.
+- Any target repository, gitlink, or other tracked workbench path under `repos/`.
 - Nondeterministic tests, fixed sleeps, weakened assertions, or mocks that bypass asserted integration.
 - Unresolved incompatible contract/release/schema change.
 

@@ -5,6 +5,25 @@
 
 Use this workflow when a task asks for a new `.agents/skills/<name>/SKILL.md` or a significant resource-library update.
 
+## Phase 0: Decide Whether This Repository Owns It
+
+Apply the
+[Context-Agnostic Core Admission Rule](../../../../docs/GOVERNANCE.md#context-agnostic-core-admission-rule)
+before creating files.
+
+Reject or reroute a proposal that depends on a specific product, language,
+framework, vendor, SaaS, SDK, issue tracker, documentation/rendering platform,
+or deployment provider. Place it in the target repository or a separate optional
+skill catalog. Passing the skill schema does not prove that the workbench is the
+right owner.
+
+Record the admission rationale in review evidence:
+
+- contexts in which the skill remains useful;
+- target-specific authority it intentionally delegates;
+- required capabilities and bounded fallbacks;
+- why target-local or catalog ownership would be less accurate.
+
 ## Sequence
 
 1. Classify the task as `create-agent-context-skill` when the work changes `.agents/skills/**`, skill resources, skill schema tests, or skill-related intent routing.
