@@ -8,6 +8,14 @@ priority: high
 
 # Islamic Value Sensitive Design
 
+## Provenance and License
+
+This workbench skill is licensed under the repository's
+[MIT License](../../../LICENSE).
+
+- **Canonical source:** [ISLAMU Islamic Value-Sensitive Design](https://github.com/islamu-ngo/Islamic-Value-Sensitive-Design)
+- **Derived from:** [*Islamic Value-Sensitive Design* thesis](https://github.com/islamu-ngo/Islamic-Value-Sensitive-Design/blob/main/Thesis/Thesis_Islamic-Value-Sensitive-Design.md)
+
 ## Resources
 
 - [Integration contract](resources/integration-contract.md) — load to select standalone, planning, or plan-review mode and enforce handoff freshness.
