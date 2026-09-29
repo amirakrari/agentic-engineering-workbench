@@ -17,6 +17,22 @@
 
 Split task instructions from reference tables when a page has competing intents.
 
+Licensing and provenance are split by responsibility:
+
+- [IP Governance](legal/IP_GOVERNANCE.md) defines clean-room research and
+  dependency-acceptance gates.
+- [Licensing and Provenance](legal/LICENSING.md) defines repository coverage,
+  the provenance matrix, and publication status.
+- [Third-Party Notices](../THIRD_PARTY_NOTICES.md) preserves upstream notices,
+  attribution, and unresolved permission records for distributors.
+
+Contributor-facing workflow is owned by:
+
+- [CONTRIBUTING](../CONTRIBUTING.md) for scope, staging safety, verification, and
+  pull-request expectations;
+- [GitHub issue forms](../.github/ISSUE_TEMPLATE/) for structured intake;
+- [Pull-request template](../.github/PULL_REQUEST_TEMPLATE.md) for review evidence.
+
 ## Boundaries
 
 | Location | Responsibility |

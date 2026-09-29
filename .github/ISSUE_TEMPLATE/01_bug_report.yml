@@ -1,0 +1,81 @@
+name: Bug report
+description: Report incorrect workbench workflow, routing, configuration, or verification behavior.
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for reporting a problem. Do not include secrets, private target
+        source, credentials, or sensitive task artifacts.
+
+  - type: textarea
+    id: observed
+    attributes:
+      label: Observed behavior
+      description: What happened? Include sanitized output and exact paths when useful.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What should the workbench have done instead?
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: Provide the smallest deterministic sequence that reproduces the issue.
+      placeholder: |
+        1. Start from...
+        2. Configure...
+        3. Run...
+        4. Observe...
+    validations:
+      required: true
+
+  - type: input
+    id: revision
+    attributes:
+      label: Workbench revision
+      description: Commit, tag, or branch where the issue occurs.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: surface
+    attributes:
+      label: Affected surface
+      options:
+        - Target discovery
+        - Planning or execution
+        - Worktree or local task state
+        - Skill routing
+        - Review or verification
+        - Configuration or schema
+        - Documentation or onboarding
+        - Licensing or provenance
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Sanitized evidence
+      description: Commands, results, screenshots, or links with sensitive data removed.
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Safety checks
+      options:
+        - label: I removed secrets, credentials, private target code, and personal data.
+          required: true
+        - label: I verified this is a workbench issue rather than target-specific behavior.
+          required: true

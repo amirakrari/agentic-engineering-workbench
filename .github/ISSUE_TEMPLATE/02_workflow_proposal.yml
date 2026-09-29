@@ -1,0 +1,78 @@
+name: Workflow proposal
+description: Propose a context-agnostic workflow, skill, rule, or contributor capability.
+title: "[Proposal]: "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What target-independent engineering problem needs solving?
+    validations:
+      required: true
+
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Desired outcome
+      description: Describe observable behavior, not only a file or implementation.
+    validations:
+      required: true
+
+  - type: textarea
+    id: contexts
+    attributes:
+      label: Cross-context evidence
+      description: In which languages, frameworks, vendors, or domains is this useful?
+    validations:
+      required: true
+
+  - type: textarea
+    id: target_authority
+    attributes:
+      label: Target authority and delegation
+      description: What remains owned by target-native instructions and skills?
+    validations:
+      required: true
+
+  - type: textarea
+    id: integration
+    attributes:
+      label: External dependencies
+      description: Identify any SaaS, SDK, vendor, issue tracker, platform, package, or service dependency.
+    validations:
+      required: true
+
+  - type: textarea
+    id: verification
+    attributes:
+      label: Portable verification
+      description: How can targets verify this using configured commands or observable behavior?
+    validations:
+      required: true
+
+  - type: dropdown
+    id: ownership
+    attributes:
+      label: Why the workbench owns this
+      options:
+        - Reusable engineering process
+        - Target discovery or precedence
+        - Verification or review governance
+        - Provenance or knowledge workflow
+        - Unsure; ownership needs discussion
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: admission
+    attributes:
+      label: Admission self-check
+      options:
+        - label: This is not product- or domain-specific.
+          required: true
+        - label: This is not a tool/vendor/platform integration disguised as a core workflow.
+          required: true
+        - label: Target-native guidance remains authoritative.
+          required: true
