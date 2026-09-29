@@ -97,25 +97,20 @@ Each portable tree was compared with the source inventory:
 | epistemic-mad-review | 1 | 1 |
 | explore-codebase | 1 | 1 |
 | finding | 1 | 1 |
-| gitbook | 180 | 27 |
 | grill-me | 1 | 1 |
 | implementation-plan | 6 | 6 |
 | implement-tasks | 1 | 1 |
 | ip-clean-room | 6 | 6 |
 | i-vsd | 35 | 35 |
-| plane-mcp | 2 | 2 |
 | refactor-safely | 1 | 1 |
 | review-changes | 1 | 1 |
 | review-pr | 1 | 1 |
 | robin-neutral | 1 | 1 |
 | senior-cto-feedback | 8 | 6 |
 | skill-authoring | 10 | 10 |
-| slidev | 54 | 54 |
-| text-to-lottie | 23 | 23 |
 
 The two project-specific CTO resources are explicitly excluded by the report.
-GitBook retains 26 reusable files plus a source-disposition record; its 154-file
-example-site implementation fixture is not imported. Category C skills, source
+Category C skills, source
 application files, hooks, benchmark scenarios and trigger configuration are absent.
 Seven stack references flatten the selected source patterns under the optional
 technology-template directory; future stack catalogs are explicitly unpopulated.
@@ -180,7 +175,7 @@ reports use `i-vsd-<project>-<task>.md`, with identity checked before reuse.
 
 - Shipped and ready-target configurations pass schema validation. The obsolete
   nested journal field and an escaping worktree path are rejected.
-- All 23 skill routers, eight agent profiles, ten intent routes and three exact
+- All 19 retained skill routers, eight agent profiles, ten intent routes and three exact
   rule-twin pairs pass their metadata/reference checks; JSON resources parse.
 - Full local verification checked 248 deliverable files, 604 Markdown links and
   seven heading anchors with no link or whitespace failures. Subsequent wording
