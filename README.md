@@ -232,9 +232,7 @@ The I-VSD skill is MIT-licensed. Its
 is the ISLAMU Islamic Value-Sensitive Design repository, and the skill is derived
 from the [*Islamic Value-Sensitive Design* thesis](https://github.com/islamu-ngo/Islamic-Value-Sensitive-Design/blob/main/Thesis/Thesis_Islamic-Value-Sensitive-Design.md).
 `grill-me` is adapted from Matt Pocock's MIT-licensed skills repository.
-`robin-neutral` is attributed to Benjamin Code, but its exact source license or
-permission remains unresolved; that skill is not cleared for public
-redistribution until the notice is completed.
+`robin-neutral` is taken from Benjamin Code's [Rodin approach](https://gist.github.com/bdebon/e22d0b728abc5f393227440907b334cf) and modified for I-VSD. The local resource is rewritten and licensed under this repository's MIT terms; the source gist does not state an MIT grant for its original wording.
 
 This is a documentation-driven cockpit, not an autonomous daemon or an installed
 toolchain. It does not select a license for your code or supersede a target's

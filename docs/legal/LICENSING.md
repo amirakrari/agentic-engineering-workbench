@@ -22,9 +22,9 @@ See [Third-Party Notices](../../THIRD_PARTY_NOTICES.md).
 | Original workbench material | Amir Akrari | MIT | Cleared |
 | I-VSD skill | [ISLAMU I-VSD repository](https://github.com/islamu-ngo/Islamic-Value-Sensitive-Design), derived from the [I-VSD thesis](https://github.com/islamu-ngo/Islamic-Value-Sensitive-Design/blob/main/Thesis/Thesis_Islamic-Value-Sensitive-Design.md) | MIT | Cleared with preserved notice |
 | `grill-me` | Matt Pocock `skills` repository | MIT | Cleared with preserved notice |
-| `robin-neutral` | Benjamin Code | Exact source and license not identified | **Not cleared for public redistribution** |
+| `robin-neutral` | [Benjamin Code's Rodin approach](https://gist.github.com/bdebon/e22d0b728abc5f393227440907b334cf) | Rewritten locally under MIT; upstream gist states no license grant | **Not cleared for public redistribution** |
 
-This matrix records the evidence available on 2026-09-29. It is not legal advice.
+This matrix records the evidence available on 2026-10-06. It is not legal advice.
 
 ## I-VSD Source and License
 

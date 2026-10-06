@@ -86,16 +86,12 @@ SOFTWARE.
 
 ## Robin Neutral
 
-- **Source attribution supplied by the maintainer:** Benjamin Code, French
-  software creator and YouTuber
+- **Source:** [Benjamin Code's Rodin approach](https://gist.github.com/bdebon/e22d0b728abc5f393227440907b334cf) (`rodin.md`)
+- **Author:** Benjamin Debonne ([@bdebon](https://github.com/bdebon) / Benjamin Code), French software creator and YouTuber
 - **Public profiles:** [YouTube](https://www.youtube.com/@BenjaminCode) and
   [GitHub](https://github.com/BenjaminCode)
 - **Workbench path:** `.agents/skills/robin-neutral/`
-- **Exact original publication:** not yet identified
-- **Upstream license or permission:** not yet identified
+- **Changes:** translated into English, modified and adapted for intellectual sparring and I-VSD
+- **Upstream license or permission:** The source gist does not state an MIT grant for its original wording
 
-This attribution record is not a license. The root MIT license covers only
-original workbench modifications and does not grant rights to any upstream
-expression in `robin-neutral`. Do not publicly redistribute that skill until the
-exact source URL and its license or explicit permission are recorded here. Once
-identified, preserve the original copyright and license notice verbatim.
+`robin-neutral` is taken from Benjamin Code's [Rodin approach](https://gist.github.com/bdebon/e22d0b728abc5f393227440907b334cf) and modified for I-VSD. The local resource is rewritten and licensed under this repository's MIT terms; the source gist does not state an MIT grant for its original wording.
